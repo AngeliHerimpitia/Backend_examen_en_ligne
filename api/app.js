@@ -19,25 +19,8 @@ import { asyncRoute, ErreurHttp, gestionErreur } from './http.js';
 export const app = express();
 const auth = new AuthRepository();
 const assiste = new AssisteRepository();
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Permet les requêtes sans origine (comme Postman ou les requêtes internes)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Bloqué par la politique CORS de production'));
-    }
-  }
-}));
-
+app.use(cors());
 app.use(helmet());
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://onrender.com'
-];
 
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/auth', rateLimit({
