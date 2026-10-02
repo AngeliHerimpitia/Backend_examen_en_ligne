@@ -45,8 +45,10 @@ app.use('/api/auth', rateLimit({
 	limit: 10,
 	standardHeaders: 'draft-8',
 	legacyHeaders: false,
+	skip: (req) => req.method === 'OPTIONS', 
 	message: { erreur: 'Trop de tentatives, réessayez plus tard' }
 }));
+
 
 const loginEmail = z.object({
 	email: z.string().trim().email(),
