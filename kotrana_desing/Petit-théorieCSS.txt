@@ -1,0 +1,41 @@
+Le css c'est une façon de stylis_ l'element d'un page web ça ne permet pas de changer le contenue lais de le presentée
+autrement . 
+
+les elements de notre page web peut etre cyblé imediatement par leur type : 
+p {
+
+}
+li {
+
+}
+ul {
+
+}
+dans ce cas tous les elements de memes types sera styliser comme indiqué. 
+Pour plus de specifications on utilises les .classe et les #Id : 
+On ajoute des propriétes et des valeurs de ces propriéts separer par un " : " , 
+comme padding : 2px;
+      color : red; 
+
+Top 15 des propriétés les plus utilisées : 
+    5 propriétes de texte :
+    //
+        color : red; // applique des couleurs a une texte .il y a aussi le valeur transparent.
+        font-size : 10px; // taille de texte , il y a aussi les valeurs en rem : root element .
+        1 rem : Une fois la valeur de bases , 2 rem : deux fois la valeur de bases , ... il y a %;
+        font-weight: bold; // Ny hatavin'ny texte;
+        text-align : left ; alligner une texte center ou right;
+        font-family : ; Pour changer le police;
+    // 
+    Propriété d'espacement : 
+    margin : 10px; //margin exterieur 
+    padding: 10px; // marge interieure;
+    height : longeur;
+    width : largeur;
+    background-color : ; //couleurs de fonds;
+    border: ;
+    border-radius;
+
+
+
+    google scolare 

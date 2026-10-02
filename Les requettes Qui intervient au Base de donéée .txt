@@ -1,0 +1,170 @@
+-- ============================================================
+-- Requêtes utiles - Plateforme Examen en ligne (examen_en_ligne)
+-- ============================================================
+
+-- --------------------------------------------------------------
+-- CRÉATION DE LA BASE
+-- --------------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS `examen_en_ligne` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `examen_en_ligne`;
+
+-- --------------------------------------------------------------
+-- GESTION DES INSCRIPTIONS
+-- --------------------------------------------------------------
+
+-- Validation Inscription Etudiant
+UPDATE etudiant SET Statuts_Inscription = TRUE WHERE Matricule_Etudiant = MatriculeDonnee;
+
+-- Validation Inscription Professeur
+UPDATE proffesseur SET Status_Inscription = TRUE WHERE Matricule_Professeur = MatriculeDonnee;
+
+-- Liste des étudiants inscrits
+SELECT Matricule_Etudiant, Nom_Etudiant, email_Etudiant, Mdp_etudiant
+FROM etudiant WHERE Statuts_Inscription = TRUE;
+
+-- Liste des étudiants non inscrits
+SELECT Matricule_Etudiant, Nom_Etudiant, email_Etudiant, Mdp_etudiant
+FROM etudiant WHERE Statuts_Inscription = FALSE;
+
+-- Inscription d'un nouvel étudiant
+INSERT INTO etudiant (Matricule_Etudiant, Nom_Etudiant, email_Etudiant, Mdp_etudiant, ID_Niveau)
+VALUES (MatriculeEnter, NomEnter, EmailEnter, MdpEnter, ID_Niveau);
+
+-- Inscription d'un nouveau professeur
+INSERT INTO proffesseur (Matricule_Professeur, email_Professeur, Mdp_Proffesseur, Nom_Professeur)
+VALUES (MatriculeEnter, EmailEnter, MdpEnter, NomEnter);
+
+-- Liste des professeurs non inscrits
+SELECT * FROM proffesseur WHERE Status_Inscription = FALSE;
+
+-- Liste des professeurs inscrits
+SELECT * FROM proffesseur WHERE Status_Inscription = TRUE;
+
+-- Liste des comptes admin
+SELECT Nom_Admin, Mdp_Admin FROM res_admin;
+
+-- Inscription d'un compte admin
+INSERT INTO res_admin (Nom_Admin, Mdp_Admin) VALUES (NomEnter, MdpEnter);
+
+-- --------------------------------------------------------------
+-- NIVEAUX ET MATIÈRES
+-- --------------------------------------------------------------
+
+-- Insertion d'un niveau
+INSERT INTO niveau (Libelle_Niveau) VALUES (NomNiveauEnter);
+
+-- Insertion d'une matière (classe)
+INSERT INTO matiere (Libelle_Matiere, ID_Niveau) VALUES (NomMatiereEnter, IdNiveauSelectionne);
+
+-- Suppression d'un niveau
+-- Attention : `examen` et `niveau` référencé par matiere/etudiant sont en ON DELETE SET NULL,
+-- mais `examen_ibfk_2` n'a pas de ON DELETE -> RESTRICT par défaut.
+-- Il faut donc supprimer/réaffecter les examens liés à ce niveau avant de le supprimer.
+DELETE FROM niveau WHERE ID_Niveau = IdNiveauDonne;
+
+-- Suppression d'une matière (classe)
+-- Attention : `examen_ibfk_1` est aussi en RESTRICT (pas de ON DELETE) :
+-- il faut d'abord supprimer/déplacer les examens qui utilisent cette matière.
+DELETE FROM matiere WHERE ID_Matiere = IdMatiereDonne;
+
+-- --------------------------------------------------------------
+-- EXAMENS, QUESTIONS, RÉPONSES
+-- --------------------------------------------------------------
+
+-- Création / Ajout d'un examen
+INSERT INTO examen (Heure_Debut, Heure_Fin, Nbre_de_Question, ID_Matiere, ID_Niveau, Matricule_Professeur)
+VALUES (HeureDebutEnter, HeureFinEnter, NbreQuestionEnter, IdMatiereSelectionne, IdNiveauSelectionne, MatriculeProfesseurConnecte);
+
+-- Ajout d'une question pour un examen
+INSERT INTO question (`Ennoncé_question`, `Barème_20_`, `Nbr_Reponse_Suggérée_`, Id_Examen)
+VALUES (EnonceEnter, BaremeEnter, NbreReponseSuggereeEnter, IdExamenSelectionne);
+
+-- Ajout d'une réponse pour une question
+INSERT INTO reponse (Contenue_reponse, `EstVrais_`, ID_Question)
+VALUES (ContenuReponseEnter, EstVraiEnter, IdQuestionSelectionnee);
+
+-- Liste des examens triés du plus récent au plus ancien
+SELECT * FROM examen ORDER BY Heure_Debut DESC;
+
+-- Prochain examen à venir (le plus proche dans le temps)
+SELECT * FROM examen WHERE Heure_Debut >= NOW() ORDER BY Heure_Debut ASC LIMIT 1;
+
+-- Liste des examens pour une classe (niveau) donnée
+SELECT * FROM examen WHERE ID_Niveau = IdNiveauDonne;
+
+-- Liste des examens pour une classe et une date (ou intervalle de dates) donnée
+SELECT * FROM examen
+WHERE ID_Niveau = IdNiveauDonne
+  AND Heure_Debut BETWEEN DateDebutEnter AND DateFinEnter;
+
+-- Liste des examens à faire pour un étudiant donné
+-- (examens de sa classe, pas encore passés par lui, et dont la plage horaire n'est pas terminée)
+SELECT ex.*
+FROM examen ex
+JOIN etudiant e ON ex.ID_Niveau = e.ID_Niveau
+WHERE e.Matricule_Etudiant = MatriculeEtudiantDonne
+  AND ex.Heure_Fin >= NOW()
+  AND ex.Id_Examen NOT IN (
+      SELECT Id_Examen FROM assiste_ WHERE Matricule_Etudiant = MatriculeEtudiantDonne
+  );
+
+-- --------------------------------------------------------------
+-- RECHERCHES
+-- --------------------------------------------------------------
+
+-- Recherche des utilisateurs étudiants (par matricule ou par nom)
+SELECT * FROM etudiant
+WHERE Matricule_Etudiant = RechercheEnter
+   OR Nom_Etudiant LIKE CONCAT('%', RechercheEnter, '%');
+
+-- Recherche des professeurs (par matricule ou par nom)
+SELECT * FROM proffesseur
+WHERE Matricule_Professeur = RechercheEnter
+   OR Nom_Professeur LIKE CONCAT('%', RechercheEnter, '%');
+
+-- --------------------------------------------------------------
+-- RÉSULTATS
+-- --------------------------------------------------------------
+
+-- Liste de tous les résultats (tous étudiants, tous examens)
+SELECT e.Nom_Etudiant, m.Libelle_Matiere, ex.Id_Examen, a.Resultat
+FROM assiste_ a
+JOIN etudiant e ON a.Matricule_Etudiant = e.Matricule_Etudiant
+JOIN examen ex ON a.Id_Examen = ex.Id_Examen
+JOIN matiere m ON ex.ID_Matiere = m.ID_Matiere;
+
+-- Liste de tous les résultats pour une matière donnée
+SELECT e.Nom_Etudiant, m.Libelle_Matiere, ex.Id_Examen, a.Resultat
+FROM assiste_ a
+JOIN etudiant e ON a.Matricule_Etudiant = e.Matricule_Etudiant
+JOIN examen ex ON a.Id_Examen = ex.Id_Examen
+JOIN matiere m ON ex.ID_Matiere = m.ID_Matiere
+WHERE m.ID_Matiere = IdMatiereDonne;
+
+-- Résultat d'un élève (par matricule ou par nom) dans une matière donnée
+SELECT e.Nom_Etudiant, m.Libelle_Matiere, ex.Id_Examen, a.Resultat
+FROM assiste_ a
+JOIN etudiant e ON a.Matricule_Etudiant = e.Matricule_Etudiant
+JOIN examen ex ON a.Id_Examen = ex.Id_Examen
+JOIN matiere m ON ex.ID_Matiere = m.ID_Matiere
+WHERE (e.Matricule_Etudiant = MatriculeOuNomDonne OR e.Nom_Etudiant = MatriculeOuNomDonne)
+  AND m.ID_Matiere = IdMatiereDonne;
+
+-- Liste des résultats d'un élève dans toutes les matières
+SELECT m.Libelle_Matiere, ex.Id_Examen, a.Resultat
+FROM assiste_ a
+JOIN examen ex ON a.Id_Examen = ex.Id_Examen
+JOIN matiere m ON ex.ID_Matiere = m.ID_Matiere
+WHERE a.Matricule_Etudiant = MatriculeEtudiantDonne;
+
+-- --------------------------------------------------------------
+-- SUPPRESSION DE COMPTES
+-- --------------------------------------------------------------
+
+-- Suppression d'un compte étudiant (supprime aussi ses lignes dans assiste_, en cascade)
+DELETE FROM etudiant WHERE Matricule_Etudiant = MatriculeDonne;
+
+-- Suppression d'un compte professeur
+-- Attention : `examen_ibfk_3` n'a pas de ON DELETE -> RESTRICT.
+-- Il faut d'abord réaffecter/supprimer les examens de ce professeur.
+DELETE FROM proffesseur WHERE Matricule_Professeur = MatriculeDonne;

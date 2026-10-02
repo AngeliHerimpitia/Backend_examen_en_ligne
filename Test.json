@@ -1,0 +1,9 @@
+{
+    "Etdiant" : {
+        "Matricule_Etudiant" : "E001",
+        "Nom_Etudiant" : "Angeli Herimpitia",
+        "Email_Etudiant" : "angeli.herimpitia@gmail.com",
+        "Mdp_Etudiant" : "password123",
+        "Statuts_Insription" : "FALSE"
+    }
+}

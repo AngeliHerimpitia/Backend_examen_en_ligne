@@ -1,0 +1,58 @@
+Plateforme d'examen en ligne : 
+-
+
+Qu'es qu'un Etudiant : 
+- Un etudiant c'est un entité tsy ho créena fa tokony efa misy 
+avec ses information qui les definissent (Numero d'inscription , 
+nom , prenom , classe ) Donc zany tsy afaka hiditra ato @plateforme rah tsy mpianara Inscrit . 
+Dans notre Contexte actuel Un etudiant aussi est un entité qui peut effectuée un Examen / Un evalutaion / Sur un Matière Donnée a Une heure donée / pendant Une heure indiquée 
+/ et il doit absolument apres avoir une correction et Un resultat sur cette meme examen. 
+Donc mila authentification matanjaka bé zany an )
+
+Qu'es qu'un Epreuve: 
+Epreuve de ataon'ny etudiant maromaro , créer par un professeur de io professeure 
+no mi definnée Date Classe Concenrnée Hanao anazy . Ny Question avec ces corrections et ses notes aussi . 
+
+Qu'es qu'un Resulat : 
+Io zany de quelques choses Calculée A partire an'i Anle Epreuve Dia izay Etudiant rehetra Concérnée Par Un Epreuve zany dia manana NOte daholo @iny Epreuve iny Resultat PAr defaut Zéro 
+
+Donc fonctionnalité Tokony ho tsara mipetraka zany dia fiche de note an'i Classe raika Pour Une Epreuve . 
+
+Misy @zay coté super Admin . 
+Izy manao confirmation anah Inscription anah Mpianatra , 
+Confiramation anah Inscription Professeure . 
+Izy koa mampiditra Classe . 
+Izy Koa Manana Anle Listes Mpianatra ao 
+Listes an'i Mpampianatra 
+Listes an'i Notes aby par matières et par classes 
+
+Ilay Classe zany tokony manana Listes an'i Matière de tokony rehefa confirmée hoe Vita examen de tokony tsy ho afaka atao tsouny rah tsy hoe rattrapage . 
+
+Inona zavatra hita sy afaka ataon'ny Etudiant : 
+-Mijery Information an'i manova an'i Mail sy numéro an'i hoatra 
+-Andefasana Notification Par Mail izy hoe Misy Evaluation nareo e 
+-De mamaly Question aby reny de avy eo Mahazo resultat (avec Timer ) 
+-Misy fenetre evaluation Prevue dans rah zany ao 
+-De Misy resultat Resulat 
+-De misy fenetre Resultat an'i koa zany ao de afak manao recherche matière izy de hitan'ny hiany ilay correction sy Note t@iny  
+-Dia an'i session an'i koa zany Rah vo manao retour izy pendant anle examen dia deconnéctée , dia rehefa Pendant anle heure iny ny classe concérnée tsy afaka mi connectée Koa donc tsy tafiditra tsony 
+-Modification Profil avec demande 
+-Rubrique evaluation avec les evaluations prévue et les evaluations efa vita fa note an'i sy correction no afaka jeren'ny ao 
+
+Inona zavatra hitan'ny Super Admin : 
+-Liste des etudiants Inscrit avec champ de recherche. 
+-Action sur les Etudiants Modification et suprresion.
+-Liste des demandes avec acceptation et refus , rehefa mivaly ny demande de tokony misy mail fona mande @Etudiant
+-Liste des Professeurs avec champs recherche aussi 
+-De modifications ausii ihany koa et surppression avec envoye de mail 
+-Listes des séances des examens dejat fait et prévue , confirmation d'un examen prévue 
+-Fiche de Note des etudiants Classifié par matière et par classe. 
+-Il peut imprimer ses fiches de notes en Pdf 
+
+
+
+
+Inona zavtra hitan'ny Professeur :
+-Ses profils avec demandes de modifications et suprresion 
+-Et Une Interface qui lui permet de faire un Nouveau Examen , avec les champs classes , Nom de l'examen , les Questions , les exercices , les corrections et les barèmes . 
+-Aprés confirmation tokony hoe mivadika Maintso ilay evaluation hoatra de zay vo lasa @ilay partie evaluation an'ny @mpianatra 

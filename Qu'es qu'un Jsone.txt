@@ -1,0 +1,9 @@
+Jsone.Parse("Ilay Texte Jsone réçue " ) Pour Convertire Un Jsone En un Objet Javascript; 
+
+
+parse() qui accepte un objet JSON sous la forme d'une chaîne de caractères en paramètre et renvoie l'objet JavaScript correspondant.
+stringify() qui accepte un objet JavaScript en paramètre et renvoie son équivalent sous la forme d'une chaîne de caractères JSON.
+
+//Mila mahay conexion avec Base de donée mi execute requette reny 
+//Pdf reny 
+//

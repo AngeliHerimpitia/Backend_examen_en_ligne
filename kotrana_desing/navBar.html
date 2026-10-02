@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body  {
+            margin: 0;
+            padding: 0;
+            font-family:   Geneva, Verdana, sans-serif/*monospace tsar tsara */;
+        }
+        #photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 30%;
+            padding-top:3%;
+            padding-bottom: 2%;
+            box-shadow: 0px 0px 10px 1px cornflowerblue;
+            border-radius: 0% 0% 50% 3%;
+            background-color: cornflowerblue;
+        }
+        #img {
+            min-width: 250px;
+            width: 20%;
+            height: 80%;
+            border-radius: 50%;
+            box-shadow: 0 1px 8px 2px rgb(255, 255, 255);
+            transition: 1s;
+        }
+        #img:hover {
+            scale: 1.1;
+        }
+        #Etat_Civile {
+            width: 100%;
+            margin-top: 5px;
+            height: 200px;
+        }
+        #log-out {
+            text-align: center;
+            align-items: center;
+            padding: 21px;
+            padding-bottom: 10px;
+            margin-top: -20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        h1 {
+            margin: 5px;
+        }
+        #info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            font-size: 18px;
+        }
+        li {
+            all: unset;
+        }
+        #logout {
+            margin: 0;
+            padding: 0;
+            width: 40px;
+            transition: 2s;
+            height: 40px;
+            box-shadow: 0 1px 10px 1px white;
+            transition: 1s cubic-bezier(0.88, 0.11, 0.06, 1.86);
+            border-radius: 5px;
+        }
+        #logout:hover {
+            scale: 1.1;
+            box-shadow: 0 1px 20px 6px white
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <div id="photo">
+            <div id="log-out">
+                
+                <h1>Angeli Herimpitia</h1>
+                <img id="logout" src="icons8-logout-64.png" alt="">
+            </div>
+            <img id="img" src="_DSC0005.JPG" alt="">
+        </div>
+        <div id="Etat_Civile">
+          <ul id="info">
+            <li>Matricule : 3624 </li>
+            <li>Nom : Herimpitia Noharinjanahary Editin Angeli </li>
+            <li>Email : AngeliHerimpitia@gmail.com </li>
+            <li>Mots de passe : Angeli07Nov08 </li>
+          </ul>
+        </div>
+        
+        
+    </form>
+</body>
+</html>
