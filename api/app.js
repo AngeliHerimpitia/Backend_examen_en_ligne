@@ -20,12 +20,6 @@ export const app = express();
 const auth = new AuthRepository();
 const assiste = new AssisteRepository();
 
-app.use(helmet());
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://onrender.com'
-];
-
 app.use(cors({
   origin: function (origin, callback) {
     // Permet les requêtes sans origine (comme Postman ou les requêtes internes)
@@ -38,6 +32,12 @@ app.use(cors({
     }
   }
 }));
+
+app.use(helmet());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://onrender.com'
+];
 
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/auth', rateLimit({
